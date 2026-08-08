@@ -33,8 +33,3 @@ pnpm-debug.log*
 
 # vercel
 .vercel
-
-# locally auto-installed Claude Code skill cache (not project source)
-.agents/
-.claude/skills/
-skills-lock.json
