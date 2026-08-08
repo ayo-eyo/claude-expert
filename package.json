@@ -1,0 +1,24 @@
+{
+  "name": "video-meeting",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Video meeting monorepo: NestJS backend + Next.js (HeroUI) frontend",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:backend": "npm run start:dev -w backend",
+    "dev:frontend": "npm run dev -w frontend",
+    "build": "npm run build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.9.6"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
