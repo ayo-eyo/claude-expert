@@ -1,5 +1,0 @@
-{
-  "apps/backend/**/*.ts": ["eslint --config apps/backend/eslint.config.mjs --fix"],
-  "apps/frontend/**/*.{js,jsx,ts,tsx}": ["eslint --config apps/frontend/eslint.config.mjs --fix"],
-  "**/*.{js,jsx,ts,tsx,json,md,css,scss,yml,yaml}": ["prettier --write --ignore-unknown"]
-}
