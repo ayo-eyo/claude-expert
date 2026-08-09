@@ -30,3 +30,10 @@ Next.js App Router, TypeScript, Tailwind CSS v4, HeroUI v3 as the UI library.
 - `src/app/page.tsx` demonstrates importing a HeroUI component (`Button`) directly from `@heroui/react`.
 
 No routing beyond the default `/` page, no API client, no state management is wired up yet.
+
+## Testing UI changes
+
+Whenever a change touches UI (new page/component, layout, styling, form behavior, etc.):
+
+- **Test it live in the browser using the Playwright MCP tools** (`mcp__playwright__*`) — navigate to the affected page(s), exercise the happy path and relevant edge cases (validation states, empty/error states, interactive toggles), and take screenshots to confirm the result visually. Don't rely on lint/type-check alone to claim a UI change works.
+- **Review the change with the `ui-ux-pro-max` skill** before considering it done — use it to check the affected page/component against its UX guidelines (accessibility, forms, layout/responsive, touch targets, color/contrast) and flag anything worth fixing.

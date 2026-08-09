@@ -33,3 +33,10 @@ pnpm-debug.log*
 
 # vercel
 .vercel
+
+# Playwright MCP scratch output
+.playwright-mcp/
+
+# python bytecode (skills with python scripts)
+__pycache__/
+*.pyc
