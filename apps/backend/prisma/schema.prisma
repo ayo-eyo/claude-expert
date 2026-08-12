@@ -23,11 +23,34 @@ model User {
 }
 
 model Meeting {
-  id           String   @id @default(uuid())
+  id           String            @id @default(uuid())
   title        String
   date         DateTime
   ownerId      String
-  owner        User     @relation("MeetingOwner", fields: [ownerId], references: [id])
-  participants User[]   @relation("MeetingParticipants")
-  createdAt    DateTime @default(now())
+  owner        User              @relation("MeetingOwner", fields: [ownerId], references: [id])
+  participants User[]            @relation("MeetingParticipants")
+  createdAt    DateTime          @default(now())
+  // Deleting a Meeting cascades to MeetingRecording in the DB, but the file on
+  // disk is not removed automatically — a future DELETE /meetings/:id must read
+  // recording.storagePath and delete the file before/after removing the meeting.
+  recording    MeetingRecording?
+}
+
+model MeetingRecording {
+  id           String          @id @default(uuid())
+  meetingId    String          @unique
+  meeting      Meeting         @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  originalName String
+  mimeType     String
+  sizeBytes    Int
+  storagePath  String
+  status       RecordingStatus @default(uploaded)
+  uploadedAt   DateTime        @default(now())
+}
+
+enum RecordingStatus {
+  uploaded
+  processing
+  ready
+  failed
 }
