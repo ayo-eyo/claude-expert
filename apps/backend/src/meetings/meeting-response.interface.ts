@@ -1,3 +1,5 @@
+import { MeetingRecordingResponse } from '../recordings/meeting-recording-response.interface';
+
 export interface MeetingResponse {
   id: string;
   title: string;
@@ -5,4 +7,5 @@ export interface MeetingResponse {
   ownerId: string;
   participants: string[];
   createdAt: string;
+  recording: MeetingRecordingResponse | null;
 }
