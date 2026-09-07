@@ -1,5 +1,6 @@
 import * as path from 'node:path';
-import { rm } from 'node:fs/promises';
+import { createReadStream, ReadStream } from 'node:fs';
+import { access, rm } from 'node:fs/promises';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
@@ -17,6 +18,19 @@ export class RecordingsStorageService {
       throw new Error(`Refusing to access path outside of storage root: ${storagePath}`);
     }
     return absolute;
+  }
+
+  createReadStream(storagePath: string): ReadStream {
+    return createReadStream(this.resolve(storagePath));
+  }
+
+  async exists(storagePath: string): Promise<boolean> {
+    try {
+      await access(this.resolve(storagePath));
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   async remove(storagePath: string): Promise<void> {

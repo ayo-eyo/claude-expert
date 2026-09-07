@@ -1,12 +1,16 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { MeetingModel, UserModel } from '../generated/prisma/models';
+import { MeetingModel, MeetingRecordingModel, UserModel } from '../generated/prisma/models';
 import { PrismaService } from '../prisma/prisma.service';
+import { toMeetingRecordingResponse } from '../recordings/meeting-recording-response.interface';
 import { CreateMeetingDto } from './dto/create-meeting.dto';
 import { MeetingResponse } from './meeting-response.interface';
 
-const MEETING_INCLUDE = { participants: true } as const;
+const MEETING_INCLUDE = { participants: true, recording: true } as const;
 
-type MeetingWithParticipants = MeetingModel & { participants: UserModel[] };
+type MeetingWithParticipants = MeetingModel & {
+  participants: UserModel[];
+  recording: MeetingRecordingModel | null;
+};
 
 @Injectable()
 export class MeetingsService {
@@ -65,6 +69,7 @@ export class MeetingsService {
       ownerId: meeting.ownerId,
       participants: meeting.participants.map((participant) => participant.id),
       createdAt: meeting.createdAt.toISOString(),
+      recording: meeting.recording ? toMeetingRecordingResponse(meeting.recording) : null,
     };
   }
 }
